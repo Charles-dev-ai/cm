@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Maina | Freelance Tech Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent-color: #00bcd4;
+  --accent-gradient: linear-gradient(135deg,#00bcd4,#ff4081);
+  --dark-bg: #121212;
+  --text-color: #fff;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'Inter',sans-serif; background:var(--dark-bg); color:var(--text-color); line-height:1.6; scroll-behavior:smooth; }
+a { text-decoration:none; color:inherit; }
+header { display:flex; justify-content:space-between; align-items:center; padding:20px 50px; position:sticky; top:0; background:rgba(18,18,18,0.95); z-index:1000; }
+header nav a { margin-left:20px; font-weight:600; color:#fff; }
+.btn { background:var(--accent-color); padding:10px 20px; border-radius:5px; color:#fff; font-weight:600; transition:0.3s; }
+.btn:hover { transform:scale(1.05); background:var(--accent-gradient); }
+
+.hero { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:100px 20px; background:linear-gradient(135deg,#0d0d0d,#1a1a1a); }
+.hero h1 { font-family:'Montserrat',sans-serif; font-size:3rem; margin-bottom:10px; }
+.hero h2 { font-size:1.5rem; margin-bottom:20px; background:var(--accent-gradient); -webkit-background-clip:text; color:transparent; }
+.hero .buttons { margin-top:20px; }
+.hero .buttons a { margin:0 10px; }
+
+/* Sections */
+section { padding:80px 50px; }
+section h2 { font-family:'Montserrat',sans-serif; font-size:2rem; margin-bottom:40px; color:var(--accent-color); text-align:center; }
+
+/* About */
+.about { max-width:900px; margin:0 auto; text-align:center; }
+
+/* Services */
+.services { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:30px; }
+.card { background:#1e1e1e; padding:20px; border-radius:10px; text-align:center; transition:0.3s; }
+.card:hover { transform:translateY(-10px); box-shadow:0 10px 20px rgba(0,0,0,0.5); }
+.card h3 { margin:15px 0; color:var(--accent-color); }
+
+/* Portfolio */
+.portfolio { display:grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
+.portfolio img { width:100%; border-radius:10px; cursor:pointer; transition:0.3s; }
+.portfolio img:hover { transform:scale(1.05); filter: brightness(1.1); }
+
+/* Portfolio Modal */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:10000; }
+.modal img { max-width:90%; max-height:80%; border-radius:10px; }
+.modal span { position:absolute; top:20px; right:40px; font-size:2rem; cursor:pointer; color:#fff; }
+
+/* Why Choose Me */
+.why ul { list-style:none; max-width:600px; margin:0 auto; text-align:center; }
+.why ul li { margin:15px 0; font-weight:500; }
+
+/* Stats */
+.stats { display:flex; justify-content:space-around; margin-top:40px; }
+.stats div { text-align:center; }
+.stats h3 { font-size:2rem; color:var(--accent-color); }
+
+/* Contact */
+.contact form { max-width:600px; margin:0 auto; display:flex; flex-direction:column; }
+.contact input, .contact textarea { padding:10px; margin-bottom:15px; border-radius:5px; border:none; }
+.contact button { align-self:flex-start; }
+
+/* Footer */
+footer { background:#111; color:#888; text-align:center; padding:40px 20px; margin-top:50px; }
+footer a { color:var(--accent-color); }
+
+/* Floating WhatsApp */
+.whatsapp { position:fixed; bottom:30px; right:30px; background:#25D366; width:60px; height:60px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-size:30px; color:#fff; z-index:1000; box-shadow:0 5px 15px rgba(0,0,0,0.3); transition:0.3s; }
+.whatsapp:hover { transform:scale(1.1); }
+
+/* Animations */
+[data-animate] { opacity:0; transform:translateY(50px); transition:0.8s ease-out; }
+[data-animate].show { opacity:1; transform:translateY(0); }
+
+@media(max-width:768px){ header { flex-direction:column; } header nav { margin-top:10px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><strong>Charles Maina</strong></div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Charles Maina</h1>
+  <h2>Freelance Developer & Digital Solutions Expert</h2>
+  <p>Graphics, Code, Databases, Branding… and beyond.</p>
+  <div class="buttons">
+    <a href="#portfolio" class="btn">View My Work</a>
+    <a href="#contact" class="btn">Hire Me</a>
+    <a href="CharlesMainaCV.pdf" download class="btn">Download CV</a>
+  </div>
+</section>
+
+<section id="about" data-animate>
+  <h2>About Me</h2>
+  <div class="about">
+    <p>I am a multi-skilled freelance tech specialist who solves real business problems. From web development, database management, to creative graphic design, I provide end-to-end digital solutions that are reliable, fast, and detail-oriented.</p>
+  </div>
+</section>
+
+<section id="services" data-animate>
+  <h2>Services</h2>
+  <div class="services">
+    <div class="card"><h3>💻 Web Development</h3><p>Modern responsive websites tailored to your needs.</p></div>
+    <div class="card"><h3>🎨 Graphic Design</h3><p>Cards, mockups, banners, and creative visuals.</p></div>
+    <div class="card"><h3>🗄️ Database Management</h3><p>Reliable storage, management, and retrieval solutions.</p></div>
+    <div class="card"><h3>🎬 Video Editing</h3><p>Social media and promotional video creation.</p></div>
+    <div class="card"><h3>🛡️ CCTV Installation</h3><p>Security solutions and technical support.</p></div>
+    <div class="card"><h3>🧠 Debugging & Support</h3><p>Troubleshooting technical problems efficiently.</p></div>
+    <div class="card"><h3>💾 Windows Data Recovery</h3><p>Recover lost files and ensure system integrity.</p></div>
+    <div class="card"><h3>🏷️ Branding Solutions</h3><p>Logos, corporate identity, and brand visuals.</p></div>
+  </div>
+</section>
+
+<section id="portfolio" data-animate>
+  <h2>Portfolio</h2>
+  <div class="portfolio">
+    <img src="https://via.placeholder.com/400x300?text=Project+1" alt="Project 1">
+    <img src="https://via.placeholder.com/400x300?text=Project+2" alt="Project 2">
+    <img src="https://via.placeholder.com/400x300?text=Project+3" alt="Project 3">
+    <img src="https://via.placeholder.com/400x300?text=Project+4" alt="Project 4">
+  </div>
+</section>
+
+<section class="why" data-animate>
+  <h2>Why Choose Me</h2>
+  <ul>
+    <li>Multi-disciplinary expertise</li>
+    <li>Fast turnaround</li>
+    <li>Business-focused solutions</li>
+    <li>Reliable support</li>
+    <li>Clean, scalable systems</li>
+  </ul>
+
+  <div class="stats">
+    <div><h3 id="projects">0</h3><p>Projects Completed</p></div>
+    <div><h3 id="clients">0</h3><p>Happy Clients</p></div>
+    <div><h3 id="experience">0</h3><p>Years Experience</p></div>
+  </div>
+</section>
+
+<section id="contact" class="contact" data-animate>
+  <h2>Contact Me</h2>
+  <form>
+    <input type="text" placeholder="Your Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <textarea rows="5" placeholder="Your Message"></textarea>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+  <p style="text-align:center; margin-top:15px;">Or contact me on <a href="https://wa.me/254719492777" target="_blank">WhatsApp</a></p>
+</section>
+
+<footer>
+  <p>© 2026 Charles Maina | Freelance Developer & Digital Solutions Expert</p>
+  <p>Phone: 0719492777 | Email: <a href="mailto:charles@example.com">charles@example.com</a></p>
+  <p>Follow me on: <a href="#">LinkedIn</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/254719492777" target="_blank" class="whatsapp">💬</a>
+
+<!-- Portfolio Modal -->
+<div class="modal" id="modal">
+  <span id="close">&times;</span>
+  <img id="modal-img" src="">
+</div>
+
+<script>
+// Scroll animation
+const animateElements = document.querySelectorAll('[data-animate]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){ entry.target.classList.add('show'); }
+  });
+}, { threshold: 0.2 });
+animateElements.forEach(el => observer.observe(el));
+
+// Portfolio modal
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+document.querySelectorAll('.portfolio img').forEach(img => {
+  img.addEventListener('click', () => { modal.style.display='flex'; modalImg.src=img.src; });
+});
+document.getElementById('close').onclick = ()=>{ modal.style.display='none'; };
+
+// Stats counter
+function counter(id, end, duration){
+  let obj=document.getElementById(id), count=0, step=Math.ceil(end/(duration/50));
+  const interval=setInterval(()=>{
+    count+=step;
+    if(count>=end){ count=end; clearInterval(interval); }
+    obj.innerText=count;
+  },50);
+}
+counter('projects', 120, 2000);
+counter('clients', 75, 2000);
+counter('experience', 5, 2000);
+</script>
+
+</body>
+</html>
