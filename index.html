@@ -1,239 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Charlie | Freelance Tech Specialist</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charlie Maina · Tech Specialist</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <!-- QR Code library (simple client-side) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
 
-<style>
-:root{
-  --bg:#f5f7fb;
-  --card:#ffffff;
-  --text:#111;
-  --accent:#4f7cff;
-}
-body.dark{
-  --bg:#0f172a;
-  --card:#1e293b;
-  --text:#f1f5f9;
-}
-*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Arial;}
-body{background:var(--bg);color:var(--text);scroll-behavior:smooth;transition:.3s;}
-header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);padding:15px 30px;display:flex;justify-content:space-between;align-items:center;}
-nav a{color:#fff;margin:0 10px;text-decoration:none;font-weight:600;transition:.3s;}
-nav a:hover{color:#ffd166;}
-.controls button, .controls select{margin-left:8px;padding:6px 10px;border-radius:8px;border:none;cursor:pointer;}
+    :root {
+      --bg: #f8fafc;
+      --bg-soft: #f1f5f9;
+      --card: #ffffff;
+      --text: #0b1b33;
+      --text-light: #334155;
+      --accent: #2563eb;
+      --accent-glow: #3b82f6;
+      --border: #e2e8f0;
+      --shadow: 0 20px 30px -10px rgba(0,0,0,0.05), 0 8px 15px rgba(0,0,0,0.03);
+      --header-bg: rgba(255,255,255,0.75);
+    }
 
-/* HERO */
-.hero{
-  height:100vh;
-  background:url('img/Background.jpg') center/cover no-repeat;
-  display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;
-}
-#particles-js{position:absolute;width:100%;height:100%;top:0;left:0;z-index:1;}
-.hero-content{position:relative;z-index:2;max-width:800px;padding:20px;}
-.hero h1{font-size:3rem;margin-bottom:10px;} 
-.hero p{opacity:.9;margin-bottom:20px;}
-.btn{background:var(--accent);color:#fff;padding:12px 24px;border-radius:30px;text-decoration:none;font-weight:600;transition:.3s;cursor:pointer;}
-.btn:hover{opacity:.9;}
+    body.dark {
+      --bg: #0b1120;
+      --bg-soft: #1e293b;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --text-light: #cbd5e1;
+      --accent: #3b82f6;
+      --border: #334155;
+      --shadow: 0 20px 30px -10px rgba(0,0,0,0.8);
+      --header-bg: rgba(15,23,42,0.85);
+    }
 
-/* FLOATING TECH ICONS */
-.tech{position:absolute;font-size:2rem;color:var(--accent);pointer-events:none;z-index:3;transition:.3s;}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.2s;
+      scroll-behavior: smooth;
+    }
 
-/* SECTIONS */
-section{padding:90px 20px;max-width:1200px;margin:auto;}
-h2{text-align:center;margin-bottom:40px;font-size:2.2rem;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
-.card{background:var(--card);padding:20px;border-radius:18px;transition:.35s;box-shadow:0 10px 30px rgba(0,0,0,.08);}
-.card img{width:100%;height:auto;border-radius:12px;}
-.card:hover{transform:translateY(-8px) scale(1.02);}
+    /* ----- UTILITY ----- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-/* GALLERY */
-.gallery img{width:100%;height:220px;object-fit:cover;border-radius:16px;transition:.4s;}
-.gallery img:hover{transform:scale(1.08);}
+    /* ----- HEADER (glass) ----- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--header-bg);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-/* CONTACT */
-form{display:none;flex-direction:column;}
-form input, form textarea{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc;}
-form button{padding:12px 20px;background:var(--accent);color:#fff;border:none;border-radius:20px;cursor:pointer;}
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, var(--accent), #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
 
-/* MODAL */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:2000;overflow:auto;}
-.modal-content{background:var(--card);margin:60px auto;padding:30px;border-radius:16px;max-width:900px;position:relative;}
-.modal-close{position:absolute;top:15px;right:20px;font-size:1.5rem;cursor:pointer;color:var(--accent);}
+    nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-/* WHATSAPP */
-.whatsapp{position:fixed;bottom:25px;right:25px;background:#25d366;color:#fff;padding:14px 18px;border-radius:50px;text-decoration:none;font-weight:bold;box-shadow:0 10px 25px rgba(0,0,0,.25);}
+    nav a {
+      color: var(--text);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 40px;
+      transition: 0.2s;
+      background: transparent;
+    }
 
-/* FOOTER */
-footer{padding:30px 20px;text-align:center;background:#222;color:#fff;}
-footer a{margin:0 8px;color:#fff;text-decoration:none;} footer a:hover{color:#ffd166;}
+    nav a:hover {
+      background: var(--accent);
+      color: white;
+    }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-  .hero h1{font-size:2rem;}
-  .hero p{font-size:1rem;}
-}
-</style>
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .controls button, .controls select {
+      background: rgba(255,255,255,0.2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+    }
+
+    .controls button:hover, .controls select:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* ----- HERO (with particles & background image) ----- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      /* Background image behind particles — exactly as requested */
+      background: linear-gradient(145deg, rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('Background.jpg') center/cover fixed no-repeat;
+      /* fallback if image missing: blend with theme */
+    }
+    body.dark .hero {
+      background: linear-gradient(145deg, rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('Background.jpg') center/cover fixed no-repeat;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0.9;  /* strong particle visibility over the background */
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      max-width: 900px;
+      padding: 30px;
+      background: rgba(0,0,0,0.25);  /* semi‑transparent overlay to make text pop */
+      backdrop-filter: blur(3px);
+      border-radius: 60px;
+      margin: 20px;
+    }
+    body.dark .hero-content {
+      background: rgba(0,0,0,0.45);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(to right, var(--accent), #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: #f1f5f9;  /* lighter on dark background */
+      margin-bottom: 32px;
+      font-weight: 500;
+      text-shadow: 0 2px 6px black;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      padding: 14px 36px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: 0.25s;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 12px 20px -10px var(--accent);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: white;
+      color: var(--accent);
+      border-color: white;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #1d4ed8;
+      box-shadow: 0 25px 30px -10px var(--accent);
+    }
+
+    /* floating tech icons */
+    .tech-float {
+      position: absolute;
+      font-size: 2.5rem;
+      color: white;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 2;
+      transition: transform 0.2s ease-out;
+      text-shadow: 0 0 15px rgba(37,99,235,0.8);
+    }
+
+    /* ----- SECTIONS (all other sections stay as before) ----- */
+    section {
+      padding: 100px 24px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-header h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--accent), #c084fc);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .section-header p {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 16px auto 0;
+    }
+
+    /* cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: 0.3s ease;
+      backdrop-filter: blur(5px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 30px 40px -10px var(--accent);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--text-light);
+      margin: 8px 0 16px;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 10px 0;
+    }
+
+    /* gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 30px;
+      transition: 0.4s;
+      box-shadow: var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      transition: 0.5s;
+      display: block;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* QR CONTACT SECTION – replaces old form */
+    .qr-contact-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 50px;
+      align-items: center;
+      justify-content: center;
+      background: var(--card);
+      border-radius: 60px;
+      padding: 50px 40px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .qr-code-box {
+      flex: 1 1 260px;
+      text-align: center;
+    }
+    #qrcode {
+      display: inline-block;
+      padding: 16px;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 20px 30px -10px var(--accent);
+    }
+    #qrcode canvas, #qrcode img {
+      border-radius: 24px;
+      width: 220px;
+      height: 220px;
+      display: block;
+    }
+
+    .qr-info {
+      flex: 2 1 300px;
+    }
+    .qr-info h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, var(--accent), #25D366);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+    .qr-info p {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+    .whatsapp-direct {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: white;
+      padding: 16px 30px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: 0.2s;
+      box-shadow: 0 12px 20px -8px #25D366;
+    }
+    .whatsapp-direct:hover {
+      background: #20b859;
+      transform: scale(1.05);
+    }
+
+    /* modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--card);
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 40px;
+      border-radius: 48px;
+      box-shadow: 0 40px 60px rgba(0,0,0,0.5);
+      position: relative;
+      border: 1px solid var(--border);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 30px;
+      font-size: 2.2rem;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: 0.2s;
+    }
+
+    .modal-close:hover {
+      color: var(--accent);
+    }
+
+    /* whatsapp button (float) */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #25D366;
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 15px 30px rgba(37,211,102,0.3);
+      z-index: 999;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.12);
+      background: #20b859;
+    }
+
+    /* footer */
+    footer {
+      background: var(--card);
+      padding: 48px 24px 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .footer-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .social a {
+      color: var(--text);
+      font-size: 1.6rem;
+      margin: 0 10px;
+      transition: 0.2s;
+      display: inline-block;
+    }
+
+    .social a:hover {
+      color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 30px 0 20px;
+    }
+
+    /* reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* responsiveness */
+    @media (max-width: 700px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .btn {
+        padding: 12px 24px;
+      }
+      .section-header h2 {
+        font-size: 2.2rem;
+      }
+      .qr-contact-container {
+        padding: 30px 20px;
+        gap: 30px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
+<!-- ========== HEADER ========== -->
 <header>
-  <strong style="color:#fff">Charlie</strong>
+  <span class="logo">⚡ Charlie Maina</span>
   <nav>
     <a href="#portfolio">Portfolio</a>
     <a href="#market">Market</a>
     <a href="#gallery">Gallery</a>
     <a href="#news">News</a>
     <a href="#store">Store</a>
-    <a href="#contact-section" onclick="toggleContact()">Contact</a>
+    <a href="#contact" onclick="toggleContact(event)">Contact</a>
   </nav>
   <div class="controls">
     <select id="lang">
-      <option value="en">EN</option>
-      <option value="sw">SW</option>
-      <option value="de">DE</option>
+      <option value="en">🇬🇧 EN</option>
+      <option value="sw">🇰🇪 SW</option>
+      <option value="de">🇩🇪 DE</option>
     </select>
-    <button onclick="toggleDark()">🌙</button>
+    <button id="themeToggle" aria-label="Dark mode toggle">🌙</button>
   </div>
 </header>
 
+<!-- ========== HERO ========== -->
 <section class="hero">
   <div id="particles-js"></div>
+  <!-- floating tech icons (mouse move) -->
+  <i class="fas fa-microchip tech-float" style="top:15%;left:8%;"></i>
+  <i class="fas fa-code tech-float" style="top:70%;left:12%;"></i>
+  <i class="fas fa-database tech-float" style="top:30%;right:10%;"></i>
+  <i class="fas fa-shield-halved tech-float" style="bottom:20%;right:20%;"></i>
+  
   <div class="hero-content">
     <h1 data-i="heroTitle">Freelance Tech Specialist</h1>
-    <p data-i="heroSub">Web, CCTV, Data & Branding Solutions</p>
-    <a class="btn" href="#portfolio" data-i="heroBtn">View My Work</a>
-    <button class="btn" onclick="openModal()">View CV</button>
+    <p data-i="heroSub">Web · CCTV · Data · Branding · Cloud</p>
+    <div class="btn-group">
+      <a class="btn" href="#portfolio" data-i="heroBtn"><i class="fas fa-arrow-down"></i> View Work</a>
+      <button class="btn btn-outline" onclick="openModal()"><i class="fas fa-file-pdf"></i> CV</button>
+    </div>
   </div>
-  <i class="fas fa-laptop tech" style="top:20%;left:15%;"></i>
-  <i class="fas fa-mobile-alt tech" style="top:40%;left:75%;"></i>
-  <i class="fas fa-camera tech" style="top:65%;left:30%;"></i>
 </section>
 
-<!-- CV Modal -->
-<div class="modal" id="cvModal">
-  <div class="modal-content">
+<!-- ========== CV MODAL ========== -->
+<div class="modal" id="cvModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal-card">
     <span class="modal-close" onclick="closeModal()">&times;</span>
-    <h2>CURRICULUM VITAE</h2>
-    <p><strong>Muchunu Charles Maina</strong><br>P.O. BOX, 205‑Ngong Hills<br>Phone: +254719492777<br>Email: charlesmaina95@gmail.com</p>
-    <h3>Professional Expertise</h3>
-    <p>An IT expert with over 4 years’ experience…</p>
-    <!-- Full CV content goes here -->
+    <h2 style="font-size: 2.4rem; background: linear-gradient(145deg, var(--accent), #a855f7); -webkit-background-clip: text; background-clip: text; color: transparent;">Charlie Maina</h2>
+    <p style="margin: 10px 0 20px;"><i class="fas fa-map-pin"></i> Ngong Hills, Kenya · <i class="fas fa-phone"></i> +254 719 492777 · <i class="fas fa-envelope"></i> charlesmaina95@gmail.com</p>
+    <hr>
+    <h3>💼 Professional summary</h3>
+    <p>IT expert with 4+ years in full‑stack development, security infrastructure (CCTV), IT consulting, and digital branding. 30+ successful projects across East Africa.</p>
+    <h3>⚙️ Core skills</h3>
+    <ul style="margin-left:20px;">
+      <li>React, Node.js, Python (Django)</li>
+      <li>Network & CCTV design (Hikvision, Dahua)</li>
+      <li>Database architecture (MySQL, MongoDB)</li>
+      <li>UI/UX & branding (Figma, Adobe Suite)</li>
+    </ul>
+    <h3>📜 Certifications</h3>
+    <p>AWS Cloud Practitioner · Cisco CCNA · Google IT Support</p>
+    <h3>🌍 Languages</h3>
+    <p>English (fluent), Swahili (native), German (basic)</p>
+    <button class="btn" style="margin-top: 30px;" onclick="window.open('https://wa.me/254719492777?text=Hi%20Charlie%2C%20I%20saw%20your%20CV')"><i class="fab fa-whatsapp"></i> Hire me on WhatsApp</button>
   </div>
 </div>
 
-<section id="portfolio" class="reveal">
-  <h2 data-i="portfolio">Portfolio</h2>
+<!-- ========== PORTFOLIO SECTION ========== -->
+<section id="portfolio" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="portfolio">📌 Portfolio</h2>
+    <p>Real-world solutions I've built</p>
+  </div>
   <div class="grid">
-    <div class="card"><img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg"><h3>Web System</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg"><h3>Database Management</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg"><h3>CCTV Setup</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/5082577/pexels-photo-5082577.jpeg"><h3>Branding Design</h3></div>
+    <div class="card"><img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Smart School System</h3><p>React / Django · 2025</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Retail Analytics DB</h3><p>MySQL + PowerBI</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>CCTV City Surveillance</h3><p>30+ cameras, remote access</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/5082577/pexels-photo-5082577.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Brand identity · Saas</h3><p>Logo, packaging, style guide</p></div>
   </div>
 </section>
 
-<section id="market" class="reveal">
-  <h2 data-i="market">Market & Branding</h2>
+<!-- ========== MARKET & BRANDING ========== -->
+<section id="market" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="market">📈 Market & Branding</h2>
+    <p>Products & campaigns with impact</p>
+  </div>
   <div class="grid">
-    <div class="card"><img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg"><h3>Security Cameras</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg"><h3>Branding</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/3319901/pexels-photo-3319901.jpeg"><h3>Coffee Bottles</h3></div>
-    <div class="card"><img src="https://images.pexels.com/photos/571742/pexels-photo-571742.jpeg"><h3>Charity Work</h3></div>
+    <div class="card"><img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Hikvision Cameras</h3><p>4K, night vision, PTZ</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Printed Branding</h3><p>Flags, roll‑ups, signage</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/3319901/pexels-photo-3319901.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Karatina Coffee</h3><p>Full branding & website</p></div>
+    <div class="card"><img src="https://images.pexels.com/photos/571742/pexels-photo-571742.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>#Tech4Kids</h3><p>Charity / STEM outreach</p></div>
   </div>
 </section>
 
-<section id="gallery" class="reveal">
-  <h2 data-i="gallery">Gallery</h2>
-  <div class="grid gallery">
-    <img src="https://images.pexels.com/photos/1181310/pexels-photo-1181310.jpeg">
-    <img src="https://images.pexels.com/photos/1181748/pexels-photo-1181748.jpeg">
-    <img src="https://images.pexels.com/photos/1181249/pexels-photo-1181249.jpeg">
-    <img src="https://images.pexels.com/photos/1181265/pexels-photo-1181265.jpeg">
+<!-- ========== GALLERY ========== -->
+<section id="gallery" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="gallery">📸 Gallery</h2>
+    <p>Moments from fieldwork & studio</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181310/pexels-photo-1181310.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181748/pexels-photo-1181748.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181249/pexels-photo-1181249.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181265/pexels-photo-1181265.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181680/pexels-photo-1181680.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
+    <div class="gallery-item"><img src="https://images.pexels.com/photos/1181373/pexels-photo-1181373.jpeg?auto=compress&cs=tinysrgb&w=600"></div>
   </div>
 </section>
 
-<section id="news" class="reveal">
-  <h2 data-i="news">Ongoing Projects</h2>
+<!-- ========== ONGOING PROJECTS ========== -->
+<section id="news" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="news">🚧 Ongoing projects</h2>
+    <p>What I'm building right now</p>
+  </div>
   <div class="grid">
-    <div class="card">African Flare Revamp</div>
-    <div class="card">Phone POS for Restaurants</div>
-    <div class="card">Matatus Digital Management</div>
+    <div class="card"><h3>🔁 African Flare Revamp</h3><p>E‑commerce for local fabrics</p><span>75% done</span></div>
+    <div class="card"><h3>📱 Phone POS (KulaFast)</h3><p>Restaurant ordering + Mpesa</p><span>prototype testing</span></div>
+    <div class="card"><h3>🚌 Matatu Digital</h3><p>Fleet & ticket management</p><span>deploying June</span></div>
+    <div class="card"><h3>🏥 Ngong Telemed</h3><p>Clinic booking system</p><span>UI stage</span></div>
   </div>
 </section>
 
-<section id="store" class="reveal">
-  <h2 data-i="store">Tech Store</h2>
+<!-- ========== TECH STORE ========== -->
+<section id="store" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="store">🛒 Tech Store</h2>
+    <p>Curated gear with warranty</p>
+  </div>
   <div class="grid">
-    <div class="card"><img src="https://images.pexels.com/photos/18105/pexels-photo.jpg"><h3>Laptop Pro</h3><p>$1200</p><button class="btn" onclick="buy('Laptop Pro')">Buy</button></div>
-    <div class="card"><img src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg"><h3>Smartphone X</h3><p>$850</p><button class="btn" onclick="buy('Smartphone X')">Buy</button></div>
-    <div class="card"><img src="https://images.pexels.com/photos/339466/pexels-photo-339466.jpeg"><h3>Wireless Earpods</h3><p>$150</p><button class="btn" onclick="buy('Wireless Earpods')">Buy</button></div>
+    <div class="card"><img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600"><h3>Laptop Pro M3</h3><p>16GB / 512GB SSD</p><div class="price">$1,199</div><button class="btn" onclick="buy('Laptop Pro M3')">Buy now</button></div>
+    <div class="card"><img src="https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>Smartphone X</h3><p>6.7" 5G, 128GB</p><div class="price">$849</div><button class="btn" onclick="buy('Smartphone X')">Buy now</button></div>
+    <div class="card"><img src="https://images.pexels.com/photos/339466/pexels-photo-339466.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>AirPods Pro</h3><p>Wireless, noise cancelling</p><div class="price">$159</div><button class="btn" onclick="buy('AirPods Pro')">Buy now</button></div>
+    <div class="card"><img src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=600"><h3>4K Drone</h3><p>GPS, 30min flight</p><div class="price">$649</div><button class="btn" onclick="buy('4K Drone')">Buy now</button></div>
   </div>
 </section>
 
-<section id="contact-section" class="reveal">
-  <h2 data-i="contact">Contact Me</h2>
-  <form id="contact-form" class="card">
-    <input placeholder="Name" required>
-    <input placeholder="Email" required>
-    <textarea rows="4" placeholder="Message" required></textarea>
-    <button class="btn">Send</button>
-  </form>
+<!-- ========== CONTACT SECTION – QR CODE ========== -->
+<section id="contact" class="reveal container">
+  <div class="section-header">
+    <h2 data-i="contact">📬 Let's connect</h2>
+    <p>Scan the QR or tap the button – instant WhatsApp</p>
+  </div>
+  <div class="qr-contact-container">
+    <div class="qr-code-box">
+      <div id="qrcode"></div>
+      <!-- QR code will be generated here by JavaScript -->
+    </div>
+    <div class="qr-info">
+      <h3><i class="fab fa-whatsapp"></i> Charlie on WhatsApp</h3>
+      <p>Scan the QR code with your phone camera or WhatsApp scanner. <br>One tap starts the chat.</p>
+      <a href="https://wa.me/254719492777" target="_blank" class="whatsapp-direct">
+        <i class="fab fa-whatsapp fa-xl"></i> +254 719 492777
+      </a>
+    </div>
+  </div>
 </section>
 
-<a class="whatsapp" href="https://wa.me/254719492777" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<!-- ========== WHATSAPP FLOAT ========== -->
+<a class="whatsapp-float" href="https://wa.me/254719492777" target="_blank" title="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
 
+<!-- ========== FOOTER ========== -->
 <footer>
-  <a href="#portfolio">Portfolio</a>
-  <a href="#market">Market</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#news">Projects</a>
-  <a href="#store">Store</a>
-  <a href="#contact-section" onclick="toggleContact()">Contact</a>
-  <div>
-    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
-    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+  <div class="footer-links">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#market">Market</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#news">Projects</a>
+    <a href="#store">Store</a>
+    <a href="#contact">Contact</a>
   </div>
-  <p>© 2026 Charlie — Freelance Tech Specialist</p>
+  <div class="social">
+    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+    <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
+  </div>
+  <hr>
+  <p>© 2026 Charlie Maina — Freelance Tech Specialist. All rights reserved.</p>
 </footer>
 
+<!-- ========== JAVASCRIPT ========== -->
 <script>
-function toggleDark(){document.body.classList.toggle("dark");localStorage.setItem("darkMode",document.body.classList.contains("dark"));}
-if(localStorage.getItem("darkMode")==="true") document.body.classList.add("dark");
+  (function() {
+    // ---------- DARK MODE ----------
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('darkMode');
+    if (storedTheme === 'true') document.body.classList.add('dark');
 
-const dict={
-  en:{heroTitle:"Freelance Tech Specialist",heroSub:"Web, CCTV, Data & Branding Solutions",heroBtn:"View My Work",portfolio:"Portfolio",market:"Market & Branding",gallery:"Gallery",news:"Ongoing Projects",store:"Tech Store",contact:"Contact Me"},
-  sw:{heroTitle:"Mtaalamu wa Teknolojia",heroSub:"Tengeneza Wavuti, CCTV, Data, Ubunifu",heroBtn:"Angalia Kazi",portfolio:"Kazi Zangu",market:"Soko na Uchapishaji",gallery:"Picha",news:"Miradi Inayoendelea",store:"Duka la Teknolojia",contact:"Wasiliana"},
-  de:{heroTitle:"Freelance Tech Spezialist",heroSub:"Web, CCTV, Daten & Branding",heroBtn:"Meine Arbeit",portfolio:"Portfolio",market:"Markt & Branding",gallery:"Galerie",news:"Laufende Projekte",store:"Tech Shop",contact:"Kontakt"}
-};
-document.getElementById("lang").onchange=e=>{const lang=e.target.value;document.querySelectorAll("[data-i]").forEach(el=>el.textContent=dict[lang][el.dataset.i]);};
+    window.toggleDark = function() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    };
+    themeToggle.addEventListener('click', toggleDark);
 
-// scroll reveal
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("active");});});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+    // ---------- I18N (simple) ----------
+    const dict = {
+      en: { heroTitle: 'Freelance Tech Specialist', heroSub: 'Web · CCTV · Data · Branding · Cloud', heroBtn: 'View Work', portfolio: '📌 Portfolio', market: '📈 Market & Branding', gallery: '📸 Gallery', news: '🚧 Ongoing projects', store: '🛒 Tech Store', contact: '📬 Let\'s connect' },
+      sw: { heroTitle: 'Mtaalamu wa Teknolojia', heroSub: 'Wavuti · CCTV · Data · Chapa · Wingu', heroBtn: 'Tazama Kazi', portfolio: '📌 Kazi Zangu', market: '📈 Soko na Chapa', gallery: '📸 Picha', news: '🚧 Miradi Inayoendelea', store: '🛒 Duka la Tech', contact: '📬 Wasiliana' },
+      de: { heroTitle: 'Freelance Tech Spezialist', heroSub: 'Web · CCTV · Daten · Branding · Cloud', heroBtn: 'Arbeit ansehen', portfolio: '📌 Portfolio', market: '📈 Marke & Branding', gallery: '📸 Galerie', news: '🚧 Aktuelle Projekte', store: '🛒 Tech Shop', contact: '📬 Kontakt' }
+    };
+    const langSelect = document.getElementById('lang');
+    langSelect.addEventListener('change', (e) => {
+      const lang = e.target.value;
+      document.querySelectorAll('[data-i]').forEach(el => {
+        const key = el.dataset.i;
+        if (dict[lang] && dict[lang][key]) el.textContent = dict[lang][key];
+      });
+    });
 
-// modal
-function openModal(){document.getElementById("cvModal").style.display="block";}
-function closeModal(){document.getElementById("cvModal").style.display="none";}
+    // ---------- REVEAL ON SCROLL ----------
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('active');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// floating tech icons
-document.addEventListener('mousemove',e=>{const icons=document.querySelectorAll(".tech");icons.forEach((icon,i)=>{icon.style.transform=`translate(${(e.clientX/window.innerWidth-0.5)*20*i}px, ${(e.clientY/window.innerHeight-0.5)*20*i}px)`});});
+    // ---------- PARTICLES (over background image) ----------
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 100 },
+        color: { value: '#ffffff' },  // white particles stand out on background
+        shape: { type: 'circle' },
+        opacity: { value: 0.7 },
+        size: { value: 4 },
+        line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.3 },
+        move: { enable: true, speed: 2 }
+      }
+    });
 
-// contact form toggle
-function toggleContact(){const f=document.getElementById("contact-form");f.style.display=f.style.display==="flex"?"none":"flex";}
+    // ---------- FLOATING ICONS MOUSE MOVE ----------
+    const floats = document.querySelectorAll('.tech-float');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 40;
+      const y = (e.clientY / window.innerHeight - 0.5) * 40;
+      floats.forEach((icon, index) => {
+        icon.style.transform = `translate(${x * (index+1)}px, ${y * (index+1)}px)`;
+      });
+    });
 
-// buy button via WhatsApp
-function buy(product){window.open(`https://wa.me/254719492777?text=Hi,%20I%20want%20to%20buy%20${encodeURIComponent(product)}`,'_blank');}
+    // ---------- MODAL CONTROL ----------
+    window.openModal = () => document.getElementById('cvModal').classList.add('show');
+    window.closeModal = () => document.getElementById('cvModal').classList.remove('show');
 
-// particles
-particlesJS("particles-js",{"particles":{"number":{"value":60},"size":{"value":3},"color":{"value":"#4facfe"},"line_linked":{"enable":true,"distance":120,"color":"#4facfe","opacity":0.2},"move":{"speed":2}}});
+    // ---------- QR CODE GENERATION (WhatsApp number) ----------
+    const qrDiv = document.getElementById('qrcode');
+    if (qrDiv) {
+      // Clear any previous content
+      qrDiv.innerHTML = '';
+      // Generate QR code for the WhatsApp link
+      new QRCode(qrDiv, {
+        text: 'https://wa.me/254719492777',
+        width: 220,
+        height: 220,
+        colorDark : '#000000',
+        colorLight : '#ffffff',
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    }
+
+    // ---------- CONTACT TOGGLE (no longer needed for form, but keep for nav) ----------
+    window.toggleContact = (e) => {
+      e?.preventDefault();
+      // just scroll to contact section
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    // ---------- BUY VIA WHATSAPP ----------
+    window.buy = (product) => {
+      window.open(`https://wa.me/254719492777?text=Hi%20Charlie%2C%20I%20want%20to%20buy%20${encodeURIComponent(product)}`, '_blank');
+    };
+
+    // close modal on escape
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+  })();
 </script>
 
 </body>
 </html>
-
